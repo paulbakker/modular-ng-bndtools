@@ -1,0 +1,21 @@
+-runfw: org.apache.felix.framework;version='[4,5)'
+-runee: JavaSE-1.6
+-runsystemcapabilities: ${native_capability}
+
+-resolve.effective: active
+-runbundles: \
+	org.apache.felix.configadmin,\
+	org.apache.felix.dependencymanager,\
+	org.apache.felix.http.jetty,\
+	org.apache.felix.http.whiteboard,\
+	org.apache.felix.metatype,\
+	org.amdatu.web.resourcehandler,\
+	org.apache.felix.gogo.command,\
+	org.apache.felix.gogo.runtime,\
+	org.apache.felix.gogo.shell,\
+	org.apache.felix.log,\
+	org.apache.felix.eventadmin,\
+	example.ui.main;version=latest,\
+	example.ui.curricula;version=latest,\
+	example.ui.profile;version=latest,\
+	org.amdatu.template

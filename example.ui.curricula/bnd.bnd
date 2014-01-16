@@ -1,0 +1,5 @@
+Bundle-Version:0.0.0.${tstamp}
+X-Web-Resource-Version: 1.1
+X-Web-Resource: /curricula;static
+Include-Resource: \
+	static=static
