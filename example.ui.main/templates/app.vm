@@ -1,7 +1,7 @@
-define(['angular', '/curricula/js/module.js', '/profile/js/module.js'], function(ng) {
+define(['angular', #foreach($module in $modules)'/${module}/js/module.js',#end], function(ng) {
   'use strict';
 
-  var appModule = ng.module('demo.app', ['ngRoute', 'curricula.app', 'profile.app'], [
+  var appModule = ng.module('demo.app', ['ngRoute', #foreach($module in $modules)'${module}.app',#end], [
     '$locationProvider', '$routeProvider',
     function($locationProvider, $routeProvider) {
       //$locationProvider.html5Mode(true);
