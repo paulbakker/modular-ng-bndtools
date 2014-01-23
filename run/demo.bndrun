@@ -15,7 +15,16 @@
 	org.apache.felix.gogo.shell,\
 	org.apache.felix.log,\
 	org.apache.felix.eventadmin,\
-	example.ui.main;version=latest,\
+	example.ui.main.core;version=latest,\
 	example.ui.curricula;version=latest,\
 	example.ui.profile;version=latest,\
-	org.amdatu.template
+	org.amdatu.template,\
+	org.apache.felix.dependencymanager.runtime,\
+	org.amdatu.web.rest.jaxrs,\
+	org.amdatu.web.rest.wink,\
+	org.amdatu.web.rest.doc,\
+	jackson-jaxrs,\
+	jackson-core-asl,\
+	jackson-mapper-asl,\
+	org.apache.felix.dependencymanager.shell,\
+	example.ui.common;version=latest

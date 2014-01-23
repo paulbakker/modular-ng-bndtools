@@ -19,8 +19,11 @@ import org.amdatu.template.processor.TemplateProcessor;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
-public class MainModuleServlet extends HttpServlet {
-	private final Map<String, List<String>> m_modules = new ConcurrentHashMap<>();
+import example.ui.main.api.NgModule;
+import example.ui.main.api.NgModuleRegistry;
+
+public class MainModuleServlet extends HttpServlet implements NgModuleRegistry {
+	private final Map<String, List<NgModule>> m_modules = new ConcurrentHashMap<>();
 	private volatile TemplateEngine m_templateEngine;
 	private volatile BundleContext m_bundleContext;
 	
@@ -30,12 +33,7 @@ public class MainModuleServlet extends HttpServlet {
 		try {
 			TemplateProcessor processor = m_templateEngine.createProcessor(templateFile);
 			TemplateContext context = m_templateEngine.createContext();
-			List<String> moduleNames = new ArrayList<>();
-			for (String bsn : m_modules.keySet()) {
-				if(!bsn.equals(m_bundleContext.getBundle().getSymbolicName())) {
-					moduleNames.addAll(m_modules.get(bsn));
-				}
-			}
+			List<NgModule> moduleNames = createListOfModules();
 
 			context.put("modules", moduleNames);
 			String output = processor.generateString(context);
@@ -45,27 +43,49 @@ public class MainModuleServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+
+	private List<NgModule> createListOfModules() {
+		List<NgModule> moduleNames = new ArrayList<>();
+		for (String bsn : m_modules.keySet()) {
+			if(!bsn.equals(m_bundleContext.getBundle().getSymbolicName())) {
+				moduleNames.addAll(m_modules.get(bsn));
+			}
+		}
+		return moduleNames;
+	}
 	
 	public void bundleAdded(Bundle bundle) {
-		String webResourceHeader = (String)bundle.getHeaders().get("X-Web-Resource");
+		String webResourceHeader = (String)bundle.getHeaders().get("X-NgApp");
 		String[] entries = webResourceHeader.split(",");
 		
-		ArrayList<String> resourceEntries = new ArrayList<String>();
+		ArrayList<NgModule> resourceEntries = new ArrayList<>();
 		m_modules.put(bundle.getSymbolicName(), resourceEntries);
 		
 		for (String entry : entries) {
 			String[] split = entry.split(";");
-			String path = split[0];
-			if(path.startsWith("/")) {
-				resourceEntries.add(path.substring(1));
-			} else {
-				resourceEntries.add(path);
+			if(split.length != 3) {
+				return;
 			}
+			
+			String path = split[0];
+			String moduleFileName = split[1];
+			String moduleName = split[2];
+			
+			if(path.startsWith("/")) {
+				path = path.substring(1);
+			} 
+			
+			resourceEntries.add(new NgModule(path, moduleFileName, moduleName, (String)bundle.getHeaders().get("X-NgLink")));
 			
 		}
 	}
 	
 	public void bundleRemoved(Bundle bundle) {
 		m_modules.remove(bundle.getSymbolicName());
+	}
+
+	@Override
+	public List<NgModule> listModules() {
+		return createListOfModules();
 	}
 }

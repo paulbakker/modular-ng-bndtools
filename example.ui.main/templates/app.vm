@@ -1,7 +1,7 @@
-define(['angular', #foreach($module in $modules)'/${module}/js/module.js',#end], function(ng) {
+define(['angular', #foreach($module in $modules)'/${module.path}/js/${module.moduleFileName}.js',#end], function(ng) {
   'use strict';
 
-  var appModule = ng.module('demo.app', ['ngRoute', #foreach($module in $modules)'${module}.app',#end], [
+  var appModule = ng.module('demo.app', ['ngRoute', #foreach($module in $modules)'${module.moduleName}',#end], [
     '$locationProvider', '$routeProvider',
     function($locationProvider, $routeProvider) {
       //$locationProvider.html5Mode(true);

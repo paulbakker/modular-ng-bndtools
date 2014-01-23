@@ -5,7 +5,8 @@ require
         paths: {
             'angular': 'lib/angular.min',
             'angular-route': 'lib/angular-route.min',
-            'domReady': 'lib/require-domready'
+            'domReady': 'lib/require-domready',
+            'lodash': 'lib/lodash'
         },
 
         shim: {

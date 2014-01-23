@@ -1,0 +1,12 @@
+Export-Package: \
+	example.ui.main.api
+X-Web-Resource-Default-Page:index.html
+X-Web-Resource-Version:1.1
+Bundle-Version:0.0.0.${tstamp}
+X-Web-Resource:/;static
+Private-Package: \
+	example.ui.main
+Include-Resource: \
+	static=static,\
+	templates
+Bundle-Activator:example.ui.main.Activator

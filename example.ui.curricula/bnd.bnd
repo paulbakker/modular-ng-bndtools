@@ -3,3 +3,5 @@ X-Web-Resource-Version: 1.1
 X-Web-Resource: /curricula;static
 Include-Resource: \
 	static=static
+X-NgApp: curricula;module;curricula.app
+X-NgLink: curricula
